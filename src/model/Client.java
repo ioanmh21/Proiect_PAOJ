@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Client {
@@ -7,12 +9,24 @@ public class Client {
     private String email;
     private String phone;
     private String cnp;
+    private List<LicenseCategory> licenseCategories;
 
     public Client(String name, String email, String phone, String cnp) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.cnp = cnp;
+        this.licenseCategories = new ArrayList<>();
+    }
+
+    public void addLicenseCategory(LicenseCategory category) {
+        if (!licenseCategories.contains(category)) {
+            licenseCategories.add(category);
+        }
+    }
+
+    public boolean hasLicenseCategory(LicenseCategory category) {
+        return licenseCategories.contains(category);
     }
 
     @Override
@@ -39,9 +53,12 @@ public class Client {
 
     public String getCnp() { return cnp; }
     public void setCnp(String cnp) { this.cnp = cnp; }
+    
+    public List<LicenseCategory> getLicenseCategories() { return licenseCategories; }
+    public void setLicenseCategories(List<LicenseCategory> licenseCategories) { this.licenseCategories = licenseCategories; }
 
     @Override
     public String toString() {
-        return "Client: " + name + " | Email: " + email + " | Tel: " + phone + " | CNP: " + cnp;
+        return "Client: " + name + " | Tel: " + phone + " | CNP: " + cnp + " | Permis: " + licenseCategories;
     }
 }
