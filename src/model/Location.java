@@ -6,7 +6,7 @@ public class Location {
     private UUID id;
     private String name;
     private String address;
-    private String studioType; // Studio foto, Outdoor, Sala evenimente
+    private String studioType;
 
     public Location(UUID id, String name, String address, String studioType) {
         this.id = id != null ? id : UUID.randomUUID();

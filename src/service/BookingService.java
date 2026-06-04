@@ -30,8 +30,6 @@ public class BookingService {
             return false;
         }
 
-        // Daca clientul nu e in DB, nu il salvam automat aici, presupunem ca a fost inregistrat de ClientService
-        // Sau il putem salva:
         List<Client> allClients = clientRepo.readAll();
         if (allClients.stream().noneMatch(c -> c.getCnp().equals(client.getCnp()))) {
             clientRepo.create(client);

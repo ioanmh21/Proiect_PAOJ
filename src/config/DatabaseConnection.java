@@ -2,6 +2,7 @@ package config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,11 +15,26 @@ public class DatabaseConnection {
     private static final String PASSWORD = "postgres";
 
     private DatabaseConnection() {
+        createDatabaseIfNotExists();
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             createTables();
         } catch (SQLException e) {
             System.err.println("Eroare conexiune DB: " + e.getMessage());
+        }
+    }
+
+    private void createDatabaseIfNotExists() {
+        String defaultUrl = "jdbc:postgresql://localhost:5432/postgres";
+        try (Connection conn = DriverManager.getConnection(defaultUrl, USER, PASSWORD);
+             Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT 1 FROM pg_database WHERE datname = 'paoj'");
+            if (!rs.next()) {
+                stmt.executeUpdate("CREATE DATABASE paoj");
+                System.out.println("Baza de date 'paoj' a fost creata automat.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Avertisment la crearea bazei de date (poate exista deja sau permisiuni insuficiente): " + e.getMessage());
         }
     }
 
@@ -49,7 +65,7 @@ public class DatabaseConnection {
                 "available BOOLEAN," +
                 "required_category VARCHAR(10)," +
                 "vehicle_type VARCHAR(20)," +
-                "extra_param DOUBLE PRECISION)"; // Folosim extra_param pt capacity, seats, etc.
+                "extra_param DOUBLE PRECISION)";
 
         String createRentals = "CREATE TABLE IF NOT EXISTS rentals (" +
                 "id UUID PRIMARY KEY," +

@@ -41,7 +41,6 @@ public class ClientRepository {
             
             stmt.executeUpdate();
         } catch (SQLException e) {
-            // Poate exista deja
             if (!e.getMessage().contains("duplicate key")) {
                 System.err.println("Eroare la adaugarea clientului: " + e.getMessage());
             }
