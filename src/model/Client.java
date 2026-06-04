@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 public class Client {
@@ -9,20 +9,18 @@ public class Client {
     private String email;
     private String phone;
     private String cnp;
-    private List<LicenseCategory> licenseCategories;
+    private Set<LicenseCategory> licenseCategories;
 
     public Client(String name, String email, String phone, String cnp) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.cnp = cnp;
-        this.licenseCategories = new ArrayList<>();
+        this.licenseCategories = new HashSet<>();
     }
 
     public void addLicenseCategory(LicenseCategory category) {
-        if (!licenseCategories.contains(category)) {
-            licenseCategories.add(category);
-        }
+        licenseCategories.add(category);
     }
 
     public boolean hasLicenseCategory(LicenseCategory category) {
@@ -54,8 +52,8 @@ public class Client {
     public String getCnp() { return cnp; }
     public void setCnp(String cnp) { this.cnp = cnp; }
     
-    public List<LicenseCategory> getLicenseCategories() { return licenseCategories; }
-    public void setLicenseCategories(List<LicenseCategory> licenseCategories) { this.licenseCategories = licenseCategories; }
+    public Set<LicenseCategory> getLicenseCategories() { return licenseCategories; }
+    public void setLicenseCategories(Set<LicenseCategory> licenseCategories) { this.licenseCategories = licenseCategories; }
 
     @Override
     public String toString() {
